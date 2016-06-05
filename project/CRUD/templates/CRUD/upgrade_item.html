@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>item</title>
+    </head>
+    <body>
+        <div style="height:100%;">
+            {% include "project/header.html" %}
+        </div>
+        <div>
+            <form id="item_form" method="post">
+            {% csrf_token %}
+            <table>
+                {{ form.as_table }}
+            </table>
+            <input type="submit" name="submit" value="upgrade Item" />
+        </form>
+        </div>
+    </body>    
+</html>

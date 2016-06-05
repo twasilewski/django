@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>item</title>
+    </head>
+    <body>
+        <div style="height:100%;">
+            {% include "project/header.html" %}
+        </div>
+        <div>
+            <h3>{{item.name}}</h3>
+            {{item.price}}
+        </div>
+        <div>
+            <a href="/CRUD/update/{{ item.id}}">update</a>    
+            <a href="/CRUD/delete/{{ item.id}}">delete</a>
+        </div>
+    </body>    
+</html>

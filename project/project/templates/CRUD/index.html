@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>index</title>
+    </head>
+    <body>
+        <div style="height:100%;">
+            {% include "project/header.html" %}
+        </div>
+        <div>
+            {% for row in rows %}
+                <h5>{{ row.name }} {{ row.id }}<a href="/CRUD/item/{{ row.id }}"> item </a></h5>
+            {% endfor %}
+        </div>
+        <a href="/CRUD/add_item/">Add a New Item</a>
+    </body>    
+</html>
