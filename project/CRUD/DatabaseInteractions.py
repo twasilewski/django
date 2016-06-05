@@ -60,6 +60,7 @@ class CRUD():
         
         row = c.fetchone()
         item = models.Item()
+        print row[0]
         item.id = row[0]
         item.name = row[1]
         item.price = row[2]
