@@ -4,6 +4,13 @@ import sqlite3
 import DatabaseInteractions
 
 class CRUDTestCase(TestCase):
+    def clean(self):
+        self.connect()
+        c = self.conn.cursor()
+        c.execute("DELETE FROM Item")
+        self.conn.commit()
+        self.conn.close()
+        
     def setUp(self):
         self.connect()
         c = self.conn.cursor()
@@ -21,11 +28,7 @@ class CRUDTestCase(TestCase):
         self.conn.close()
         
     def tearDown(self):
-        self.connect()
-        c = self.conn.cursor()
-        c.execute("DELETE FROM Item")
-        self.conn.commit()
-        self.conn.close()
+        self.clean()
 
     def connect(self):
         self.conn = sqlite3.connect('baza.db')
@@ -35,18 +38,55 @@ class CRUDTestCase(TestCase):
         item = models.Item
         item.name = "test1"
         item.price = 1
+
+        id = DB.create(item)
+        item2 = DB.getById(id)
+        self.assertEqual(item2.name, item.name)
+
+    def test_create(self):
+        self.clean()
+        
+    
+        DB = DatabaseInteractions.CRUD()
+        item = models.Item
+        item.name = "test1"
+        item.price = 1
+        
+        id = DB.create(item)
+        item2 = DB.getById(id)
+        self.assertEqual(item2.name, item.name)
+
+    def test_update(self):
+        self.clean()
+        DB = DatabaseInteractions.CRUD()
+        item = models.Item
+        item.name = "test1"
+        item.price = 1
+        
+        id = DB.create(item)
+        
+        item.id = id
+        
+        item.name = "update1"
+        
+        DB.update(item)
+        item2 = DB.getById(item.id)
         
         
+        self.assertEqual(item2.name, "update1")
         
-        DB.create(item)
-        DB.getById(0)
-        # self.assertEqual("test1", item.name)
-
-
-
-
-
-
+    def test_delete(self):
+        self.clean()
+        DB = DatabaseInteractions.CRUD()
+        item = models.Item
+        item.name = "test1"
+        item.price = 1
+        
+        id = DB.create(item)
+        item2 = DB.getById(id)
+        DB.deleteById(item2.id)
+        item2 = DB.getById(id)
+    
 
     
 

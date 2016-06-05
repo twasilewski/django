@@ -7,7 +7,6 @@ class CRUD():
         self.conn = sqlite3.connect('baza.db')
    
     def update(self, item):
-        print item.id
         self.connect()
         c = self.conn.cursor()
         
@@ -27,13 +26,13 @@ class CRUD():
                         (item.name, item.price)
                     )
         self.conn.commit()
+        id = c.lastrowid
         
         
-        c.execute('SELECT * FROM Item')
-        rows = c.fetchall()
         
             
         self.conn.close()
+        return id
             
     def getAll(self):
         self.connect()
@@ -58,19 +57,23 @@ class CRUD():
         c = self.conn.cursor()
         c.execute('SELECT * FROM Item WHERE Id = ?', (id,))
         
+        
         row = c.fetchone()
         item = models.Item()
-        print row[0]
+        
+        
+        
         item.id = row[0]
         item.name = row[1]
         item.price = row[2]
         
-        print row
+        
         return item
     def deleteById(self, id):
         self.connect()
         c = self.conn.cursor()
-        c.execute('DELETE FROM Item WHERE Id = ?', id)
+        c.execute('DELETE FROM Item WHERE Id = ?', (id,) )
         self.conn.commit()
         self.conn.close()
+        
             
